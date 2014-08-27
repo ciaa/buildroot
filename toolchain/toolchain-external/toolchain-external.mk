@@ -283,6 +283,9 @@ else ifeq ($(BR2_TOOLCHAIN_EXTERNAL_LINARO_ARMEB),y)
 TOOLCHAIN_EXTERNAL_SITE = http://releases.linaro.org/14.08/components/toolchain/binaries/
 TOOLCHAIN_EXTERNAL_SOURCE = gcc-linaro-armeb-linux-gnueabihf-4.9-2014.08_linux.tar.xz
 TOOLCHAIN_EXTERNAL_POST_INSTALL_STAGING_HOOKS += TOOLCHAIN_EXTERNAL_LINARO_ARMEBHF_SYMLINK
+else ifeq ($(BR2_TOOLCHAIN_EXTERNAL_OSELAS_ARM_CORTEX_M3),y)
+TOOLCHAIN_EXTERNAL_SITE = http://debian.pengutronix.de/debian/pool/main/o/oselas.toolchain-2013.12.2-arm-cortexm3-uclinuxeabi-gcc-4.8.2-uclibc-0.9.33.2-binutils-2.24-kernel-3.12-sanitized/
+TOOLCHAIN_EXTERNAL_SOURCE = oselas.toolchain-2013.12.2-arm-cortexm3-uclinuxeabi-gcc-4.8.2-uclibc-0.9.33.2-binutils-2.24-kernel-3.12-sanitized_2013.12.2_i386.deb
 else ifeq ($(BR2_TOOLCHAIN_EXTERNAL_CODESOURCERY_MIPS201305),y)
 TOOLCHAIN_EXTERNAL_SITE = http://sourcery.mentor.com/public/gnu_toolchain/mips-linux-gnu/
 TOOLCHAIN_EXTERNAL_SOURCE = mips-2013.05-66-mips-linux-gnu-i686-pc-linux-gnu.tar.bz2
@@ -421,6 +424,14 @@ define TOOLCHAIN_EXTERNAL_EXTRACT_CMDS
 		$(TAR) $(TAR_STRIP_COMPONENTS)=3 --hard-dereference -C $(TOOLCHAIN_EXTERNAL_INSTALL_DIR) $(TAR_OPTIONS) -
 	$(call suitable-extractor,$(TOOLCHAIN_EXTERNAL_EXTRA_DOWNLOADS)) $(DL_DIR)/$(TOOLCHAIN_EXTERNAL_EXTRA_DOWNLOADS) | \
 		$(TAR) $(TAR_STRIP_COMPONENTS)=3 --hard-dereference -C $(TOOLCHAIN_EXTERNAL_INSTALL_DIR) $(TAR_OPTIONS) -
+endef
+else ifeq ($(BR2_TOOLCHAIN_EXTERNAL_OSELAS_ARM_CORTEX_M3),y)
+# Special handling for OSELAS toolchains
+define TOOLCHAIN_EXTERNAL_EXTRACT_CMDS
+	mkdir -p $(TOOLCHAIN_EXTERNAL_INSTALL_DIR)
+	(cd $(@D); ar xvf $(DL_DIR)/$(TOOLCHAIN_EXTERNAL_SOURCE))
+	$(call suitable-extractor,data.tar.xz) $(@D)/data.tar.xz | \
+		$(TAR) $(TAR_STRIP_COMPONENTS)=5 -C $(TOOLCHAIN_EXTERNAL_INSTALL_DIR) $(TAR_OPTIONS) -
 endef
 else ifneq ($(TOOLCHAIN_EXTERNAL_SOURCE),)
 # Normal handling of toolchain tarball extraction.
