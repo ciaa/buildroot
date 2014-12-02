@@ -1,5 +1,9 @@
 if BR2_TOOLCHAIN_EXTERNAL
 
+config BR2_ARM_TOOLCHAIN_SKIP_CHECK
+	bool
+	default n
+
 choice
 	prompt "Toolchain"
 
