@@ -1,0 +1,37 @@
+CIAA Linux
+==========
+
+Este repositorio permite compilar un sistema GNU/Linux para
+la CIAA (Computadora Industrial Abierta Argentina) usando Buildroot.
+
+El software se genera completamente desde los fuentes, excepto el toolchain
+OSELAS de Pengutronix que se obtiene en forma binaria.
+
+¡Los pasos son muy simples!
+
+1. Configurar
+
+  $ make ciaa_lpc4337_defconfig
+
+2. Compilar
+
+  $ make
+
+3. Tomarse unos mates (preferiblemente amargos). La yerba mate tiene
+propiedades anti-oxidantes y ayudan a esperar mejor que la compilación
+finalice.
+
+4. Conectar la CIAA
+
+Primero conectamos el puerto ethernet. Esto es importante para descargar
+la imagen que debemos grabar.
+
+Conectamos el puerto USB DBG a un puerto USB de la computadora host.
+
+TODO.
+
+5. Grabamos las memorias flash internas
+
+La CIAA NXP LPC4337 tiene dos memorias internas. TODO.
+
+6. ...
