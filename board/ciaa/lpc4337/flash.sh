@@ -5,6 +5,9 @@ BIMAGE=output/images/u-boot.bin
 KIMAGE=output/images/uImage
 $OOCD -f $CFG \
 	-c "init" \
-	-c "reset halt" \
+	-c "reset" \
+	-c "halt" \
 	-c "flash write_image erase unlock $KIMAGE 0x14000000 bin" \
-	-c "flash write_image erase unlock $BIMAGE 0x1a000000 bin"
+	-c "flash write_image erase unlock $BIMAGE 0x1a000000 bin" \
+	-c "reset" \
+	-c "exit"
